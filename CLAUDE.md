@@ -53,7 +53,6 @@ server/                   — Google Apps Script (source of truth; NOT executed 
                             column), Pregled tab (counts), TEST tabs, and „Resetuj podatke". Reads TABOVI /
                             KOLONE / opsegZa() straight out of apps-script.gs — Apps Script shares one global
                             scope across files, so the header and the writer cannot drift apart.
-UPUTSTVO-GOOGLE-SHEETS.md — Step-by-step Sheets setup in Serbian (for the researcher, not for Claude)
 ```
 
 Paths are relative: pages in `strane/` reference assets as `../assets/…`; `index.html` at the root uses `assets/…` and `strane/…`.
@@ -167,7 +166,8 @@ Note: `.unos-drugo` inputs (e.g. `druga_institucija_tekst`) are **not** validate
 - Sections have no visible title heading; each section opens directly with its `.skala-uputstvo` instruction. For every Likert scale that instruction ends with a `Skala: <min> = …; <max> = …` legend matching that scale's own endpoints.
 - The `.badge` in each header shows the full institutional affiliation.
 
-## Pending — must be resolved before the survey goes live
+## Open question
 
-1. **`assets/config.js` has an empty `UPITNIK_URL`.** Until it is filled in, the form validates but refuses to send and shows a configuration alert. Follow `UPUTSTVO-GOOGLE-SHEETS.md` and paste the `/exec` URL here.
-2. The empty `(npr. )` parentheses on 12 visual-arts preference items have been removed, so the items read cleanly. The music version still carries composer examples (`m_pref9` → "Bluz (npr. B. B. King, Muddy Waters, Etta James)"); if parity matters, artist examples can be added back to `l_pref1`–`l_pref11` and `l_tehnika*`.
+The site is live at <https://jovana-blagojevic.github.io/UPITNIK-UP/> and `assets/config.js` carries a working `/exec` URL, so the form submits. One cosmetic point is still open:
+
+- The empty `(npr. )` parentheses on 12 visual-arts preference items have been removed, so the items read cleanly. The music version still carries composer examples (`m_pref9` → "Bluz (npr. B. B. King, Muddy Waters, Etta James)"); if parity matters, artist examples can be added back to `l_pref1`–`l_pref11` and `l_tehnika*`.

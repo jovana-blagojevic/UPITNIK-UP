@@ -27,10 +27,7 @@ jedan tab za svaku grupu (**Muzika**, **Likovna kultura**).
 
 ### 1. Google tabela i Apps Script
 
-Korak po korak, sa svim mestima na kojima se najčešće greši:
-**[UPUTSTVO-GOOGLE-SHEETS.md](UPUTSTVO-GOOGLE-SHEETS.md)**.
-
-Ukratko: nova tabela (zasebna od MSF upitnika) → `Extensions → Apps Script` →
+Nova tabela (zasebna od MSF upitnika) → `Extensions → Apps Script` →
 `server/apps-script.gs` u `Code.gs` i `server/apps-script-setup.gs` kao drugi
 fajl → `Deploy → New deployment → Web app` (*Execute as: Me*, *Who has access:
 Anyone*) → kopiraj `/exec` URL.

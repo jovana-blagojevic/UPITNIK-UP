@@ -5,7 +5,6 @@
    OVAJ FAJL JE IZVOR ISTINE ZA SERVERSKI KOD. Kod se NE izvršava iz Git-a —
    nalepi ga u Apps Script editor tabele u koju se upisuje (Code.gs).
 
-   Puno uputstvo korak po korak: ../UPUTSTVO-GOOGLE-SHEETS.md
 
    UKRATKO:
      1. Google tabela → Extensions → Apps Script
