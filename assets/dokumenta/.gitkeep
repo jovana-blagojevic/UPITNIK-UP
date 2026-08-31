@@ -1,0 +1,7 @@
+Ovde idu tri PDF-a (imena moraju biti tačno ovakva, linkovi ih već očekuju):
+
+  potvrda-eticke-komisije.pdf        — linkovan iz index.html
+  informisani-pristanak-muzika.pdf   — linkovan iz strane/index-muzika.html
+  informisani-pristanak-likovno.pdf  — linkovan iz strane/index-likovno.html
+
+Ovaj fajl postoji samo da bi Git pratio prazan folder; može se obrisati kad PDF-ovi stignu.
