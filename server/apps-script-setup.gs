@@ -461,7 +461,7 @@ var OPISI_GRUPA = {
     "m_pref7": "7. Rok (npr. The Beatles, The Rolling Stones, Queen, Nirvana)",
     "m_pref8": "8. Pop (npr. Michael Jackson, Madonna, Adele, Taylor Swift)",
     "m_pref9": "9. Bluz (npr. B. B. King, Muddy Waters, Etta James)",
-    "m_sastav1": "1. Solistička vokalna izvedba",
+    "m_sastav1": "1. Solističko vokalno izvođenje",
     "m_sastav2": "2. Horsko ili vokalno grupno izvođenje",
     "m_sastav3": "3. Kamerno izvođenje (mali instrumentalni ansambli)",
     "m_sastav4": "4. Orkestarsko izvođenje",
