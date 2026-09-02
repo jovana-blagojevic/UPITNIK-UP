@@ -969,14 +969,18 @@ form {
     /* Širina jedne kolone skale. Zaglavlje i red sa dugmadima čitaju istu
        vrednost, pa broj u zaglavlju uvek stoji tačno iznad svog dugmeta.
        Kolona mora biti šira od najduže reči u oznaci — inače oznaka
-       pretekne kolonu i naleže na susednu. Najduža je „preferiram," na
-       0.72rem = 61.4px, pa je kolona 66px. Vrednosti su fiksne namerno:
-       kolona i veličina slova moraju da se menjaju zajedno, a vw-skaliranje
-       ih razdvoji (na uskom ekranu kolona se skupi ispod dužine reči). */
-    --skala-kolona: 66px;
+       pretekne kolonu i naleže na susednu. Najduža reč je „preferiram,"
+       i široka je 5.33× veličine slova oznake, pa je kolona izvedena iz
+       veličine slova (faktor 5.9 ostavlja ~3px vazduha sa svake strane).
+       Zato je vezana calc-om, a ne fiksnim px: ako čitalac u pregledaču
+       poveća osnovnu veličinu slova, rem oznake raste, pa mora da raste i
+       kolona — inače se reči susednih podeoka opet dodirnu. vw-skaliranje
+       ih razdvaja (kolona se skupi ispod dužine reči) i zato se ne koristi. */
+    --skala-faktor: 5.9;
+    --skala-oznaka: 0.72rem;
+    --skala-kolona: calc(var(--skala-oznaka) * var(--skala-faktor));
     --skala-dugme: 60px;
     --skala-razmak: 8px;
-    --skala-oznaka: 0.72rem;
 
     border: 1px solid var(--ivica);
     border-radius: var(--r-mali);
@@ -990,7 +994,12 @@ form {
 /* ── Zaglavlje Likert (sticky pri skrolovanju) ── */
 .likert-zaglavlje {
     display: grid;
-    grid-template-columns: 1fr auto;
+    /* minmax(0, …) a ne 1fr: kada skala prestane da staje (npr. uvećana
+       osnovna veličina slova u pregledaču), tekstualna kolona u zaglavlju i
+       u redu mora da se skupi do iste širine. Sa golim 1fr svaka se
+       zaustavlja na svom min-content-u — različitom — pa broj sklizne sa
+       svog dugmeta. */
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
     padding: 12px 16px 12px;
     border-bottom: 2px solid var(--ivica-jak);
@@ -1026,6 +1035,11 @@ form {
 }
 
 .likert-brojevi span {
+    /* Kolona se ne skuplja: zaglavlje i red sa dugmadima moraju da se stisnu
+       istom brzinom, inače broj sklizne sa svog dugmeta kada tekst tvrdnje
+       više ne može da se sužava (uočljivo tek pri uvećanoj osnovnoj veličini
+       slova u pregledaču). */
+    flex: 0 0 var(--skala-kolona);
     width: var(--skala-kolona);
     text-align: center;
     font-size: 0.8rem;
@@ -1075,7 +1089,8 @@ form {
 /* ── Red ── */
 .likert-red {
     display: grid;
-    grid-template-columns: 1fr auto;
+    /* Isto kao u zaglavlju — v. .likert-zaglavlje. */
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 12px;
     padding: 10px 16px;
@@ -1122,6 +1137,8 @@ form {
    tako se poravnanje sa brojevima ne gubi kad kolona poraste zbog oznaka. */
 .likert-opcija {
     cursor: pointer;
+    /* Ista kolona, isto ne-skupljanje kao u zaglavlju — v. .likert-brojevi span. */
+    flex: 0 0 var(--skala-kolona);
     width: var(--skala-kolona);
     display: flex;
     justify-content: center;
@@ -1198,11 +1215,10 @@ form {
    sitnija — odnos širina kolone : dužina najduže reči („potpunosti") ostaje
    isti kao na petostepenoj skali, tako da se oznake ni ovde ne dodiruju. */
 .likert-blok.likert-7 {
-    /* „potpunosti" na 0.58rem = 47.6px → kolona 52px. */
-    --skala-kolona: 52px;
+    /* Samo veličina slova — kolonu izvodi zajednički calc iz .likert-blok. */
+    --skala-oznaka: 0.58rem;
     --skala-dugme: 48px;
     --skala-razmak: 5px;
-    --skala-oznaka: 0.58rem;
 }
 
 .likert-7 .likert-opcija span {
