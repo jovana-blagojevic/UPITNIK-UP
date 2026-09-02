@@ -966,10 +966,25 @@ form {
 
 /* ── Likert blok — tabela ── */
 .likert-blok {
+    /* Širina jedne kolone skale. Zaglavlje i red sa dugmadima čitaju istu
+       vrednost, pa broj u zaglavlju uvek stoji tačno iznad svog dugmeta.
+       Kolona mora biti šira od najduže reči u oznaci — inače oznaka
+       pretekne kolonu i naleže na susednu. Najduža je „preferiram," na
+       0.72rem = 61.4px, pa je kolona 66px. Vrednosti su fiksne namerno:
+       kolona i veličina slova moraju da se menjaju zajedno, a vw-skaliranje
+       ih razdvoji (na uskom ekranu kolona se skupi ispod dužine reči). */
+    --skala-kolona: 66px;
+    --skala-dugme: 60px;
+    --skala-razmak: 8px;
+    --skala-oznaka: 0.72rem;
+
     border: 1px solid var(--ivica);
     border-radius: var(--r-mali);
     background: var(--povrsina);
     margin-bottom: 32px;
+    /* Skala sa ispisanim oznakama je šira od tekstualne kolone, pa blok
+       izlazi iz unutrašnjeg pada forme umesto da stiska tekst tvrdnje. */
+    margin-inline: -20px;
 }
 
 /* ── Zaglavlje Likert (sticky pri skrolovanju) ── */
@@ -1007,11 +1022,11 @@ form {
 
 .likert-brojevi {
     display: flex;
-    gap: 8px;
+    gap: var(--skala-razmak);
 }
 
 .likert-brojevi span {
-    width: 52px;
+    width: var(--skala-kolona);
     text-align: center;
     font-size: 0.8rem;
     font-weight: 600;
@@ -1040,7 +1055,7 @@ form {
 }
 
 .likert-brojevi span small {
-    font-size: 0.78rem;
+    font-size: var(--skala-oznaka);
     font-weight: 500;
     color: #C6BCB0;
     color: oklch(0.80 0.02 70);
@@ -1048,7 +1063,12 @@ form {
     text-align: center;
     white-space: normal;
     word-break: keep-all;
-    max-width: 62px;
+    /* Oznaka nikada ne sme da bude šira od svoje kolone — fiksna vrednost
+       veća od širine kolone je ono što je pravilo naleganje oznaka. */
+    max-width: 100%;
+    /* Poslednja odbrana: ako bi reč ipak bila duža od kolone, prelama se
+       umesto da se prelije preko susedne. */
+    overflow-wrap: break-word;
     letter-spacing: 0.01em;
 }
 
@@ -1094,12 +1114,17 @@ form {
 .likert-opcije {
     display: flex;
     flex-direction: row;
-    gap: 8px;
+    gap: var(--skala-razmak);
     flex-shrink: 0;
 }
 
+/* Ćelija je široka kao kolona zaglavlja, dugme je centrirano u njoj —
+   tako se poravnanje sa brojevima ne gubi kad kolona poraste zbog oznaka. */
 .likert-opcija {
     cursor: pointer;
+    width: var(--skala-kolona);
+    display: flex;
+    justify-content: center;
 }
 
 .likert-opcija input[type="radio"] {
@@ -1113,7 +1138,7 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
+    width: var(--skala-dugme);
     height: 34px;
     font-family: var(--font-sans);
     font-size: 0.88rem;
@@ -1169,29 +1194,30 @@ form {
 }
 
 /* ── 7-stepena skala ── */
+/* Sedam kolona u istoj širini znači uže kolone, pa i oznaka mora da bude
+   sitnija — odnos širina kolone : dužina najduže reči („potpunosti") ostaje
+   isti kao na petostepenoj skali, tako da se oznake ni ovde ne dodiruju. */
+.likert-blok.likert-7 {
+    /* „potpunosti" na 0.58rem = 47.6px → kolona 52px. */
+    --skala-kolona: 52px;
+    --skala-dugme: 48px;
+    --skala-razmak: 5px;
+    --skala-oznaka: 0.58rem;
+}
+
 .likert-7 .likert-opcija span {
-    width: 44px;
     height: 30px;
     font-size: 0.82rem;
     border-radius: var(--r-mali);
 }
 
 .likert-7 .likert-brojevi span {
-    width: 44px;
     font-size: 0.76rem;
 }
 
 .likert-7 .likert-brojevi span b {
     font-size: 0.9rem;
 }
-
-.likert-7 .likert-brojevi span small {
-    max-width: 50px;
-    font-size: 0.72rem;
-}
-
-.likert-7 .likert-brojevi { gap: 5px; }
-.likert-7 .likert-opcije  { gap: 5px; }
 
 /* ══════════════════════════════════════════
    POTVRDA SAGLASNOSTI
@@ -1493,6 +1519,10 @@ form {
     form { padding: 38px 32px 42px; }
     .uvod-telo { padding: 34px 36px 40px; }
 
+    /* Pad forme je ovde 32px, pa Likert blok izlazi samo toliko koliko
+       ostavi vidljivu marginu do ivice kartice. */
+    .likert-blok { margin-inline: -14px; }
+
     .sekcija { margin-bottom: 44px; }
 }
 
@@ -1613,7 +1643,12 @@ form {
     .unos-suffix { font-size: 0.85rem; }
 
     /* ─────────── LIKERT mobile pivot ─────────── */
-    .likert-blok { margin-bottom: 28px; }
+    /* Skala se ovde prostire preko cele širine reda, pa fiksne kolone
+       (--skala-kolona / --skala-dugme) ne važe i blok ostaje u padu forme. */
+    .likert-blok {
+        margin-bottom: 28px;
+        margin-inline: 0;
+    }
 
     .likert-zaglavlje {
         grid-template-columns: 1fr;
@@ -1667,7 +1702,7 @@ form {
         gap: 6px;
         justify-content: space-between;
     }
-    .likert-opcija { flex: 1; }
+    .likert-opcija { flex: 1; width: auto; }
     .likert-opcija span {
         width: 100%;
         height: 40px;
@@ -1679,9 +1714,8 @@ form {
     .likert-7 .likert-brojevi { gap: 4px; }
     .likert-7 .likert-brojevi span b { width: 22px; height: 22px; font-size: 0.78rem; }
     /* 7 kolona na 375 px je već na granici — veći tekst ovde prelije
-       zaglavlje preko ivice bloka, pa ostaje na 0.58rem. Bez max-width
-       reseta desktop vrednost (50px) razvuče kolone preko širine bloka. */
-    .likert-7 .likert-brojevi span small { font-size: 0.58rem; max-width: 100%; }
+       zaglavlje preko ivice bloka, pa ostaje na 0.58rem. */
+    .likert-7 .likert-brojevi span small { font-size: 0.58rem; }
     .likert-7 .likert-opcije { gap: 4px; }
     .likert-7 .likert-opcija span {
         width: 100%;
