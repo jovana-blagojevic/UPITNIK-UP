@@ -75,8 +75,8 @@ Section order is identical in both files:
 | # | Sekcija | Polja | Skala |
 |---|---|---|---|
 | 1 | Demografija | see below | — |
-| 2 | Umetničke preferencije | `m_pref1`–`18` / `l_pref1`–`11` | 1–5 dopadanje |
-| 3 | Izvođački sastavi / Likovne tehnike | `m_sastav1`–`5` / `l_tehnika1`–`6` | 1–5 dopadanje |
+| 2 | Umetničke preferencije | `m_pref1`–`18` / `l_pref1`–`11` | 1–5 preferiranje |
+| 3 | Izvođački sastavi / Likovne tehnike | `m_sastav1`–`5` / `l_tehnika1`–`6` | 1–5 preferiranje |
 | 4 | Tradicionalno vs. savremeno | `trad1`–`3` | 1–5 slaganje |
 | 5 | Aktivnosti van škole | `van_skole`, `van_skole_tekst`, `van1`–`7` | Da/Ne + 1–5 |
 | 6 | Motivacija u nastavi | `motiv1`–`6` | 1–5 slaganje |
